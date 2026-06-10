@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sírvete Primero — Alexa González</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#8B7FE8',
+              light: '#8B7FE826',
+              dark: '#7B6FD8',
+              accent: '#64D4C8',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Syne', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-bg:             #0A0A0F;
+      --color-bg-card:        #12121A;
+      --color-bg-elevated:    #1A1A26;
+      --color-primary:        #8B7FE8;
+      --color-primary-hover:  #7B6FD8;
+      --color-primary-glow:   #8B7FE826;
+      --color-accent:         #64D4C8;
+      --color-text-primary:   #F0EFF8;
+      --color-text-secondary: #8B8AA8;
+      --color-border:         #2A2A3A;
+      --color-border-active:  #8B7FE8;
+    }
+
+    * { -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text-primary);
+    }
+
+    .option-card {
+      cursor: pointer;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      transition: all 0.2s ease;
+      background: var(--color-bg-card);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      text-align: left;
+      width: 100%;
+    }
+    .option-card:hover {
+      border-color: var(--color-primary);
+      background: var(--color-primary-glow);
+    }
+    .option-card.selected {
+      border: 1.5px solid var(--color-border-active);
+      background: var(--color-primary-glow);
+      box-shadow: 0 0 15px #8B7FE820;
+    }
+    .option-card .option-label { color: var(--color-text-secondary); font-size: 13px; }
+    .option-card.selected .option-label { color: var(--color-text-primary); }
+
+    .option-card .radio-dot {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 50%;
+      border: 1.5px solid var(--color-border);
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .option-card.selected .radio-dot {
+      border-color: var(--color-primary);
+      background: var(--color-primary);
+    }
+    .option-card.selected .radio-dot::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #F0EFF8;
+    }
+
+    .grid-card {
+      cursor: pointer;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 18px 12px;
+      transition: all 0.2s ease;
+      background: var(--color-bg-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+    }
+    .grid-card:hover {
+      border-color: var(--color-primary);
+      background: var(--color-primary-glow);
+    }
+    .grid-card.selected {
+      border: 1.5px solid var(--color-border-active);
+      background: var(--color-primary-glow);
+      box-shadow: 0 0 15px #8B7FE820;
+    }
+    .grid-card .card-name { color: var(--color-text-secondary); }
+    .grid-card.selected .card-name { color: var(--color-text-primary); }
+    .grid-card .grid-check { position: absolute; top: 8px; right: 8px; opacity: 0; transition: opacity 0.18s; }
+    .grid-card.selected .grid-check { opacity: 1; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #8B7FE8, #7B6FD8);
+      color: #F0EFF8;
+      border-radius: 8px;
+      padding: 16px 24px;
+      font-weight: 500;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.03em;
+      width: 100%;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 20px #8B7FE830;
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: linear-gradient(135deg, #9B8FF8, #8B7FE8);
+      box-shadow: 0 0 28px #8B7FE845;
+    }
+    .btn-primary:disabled {
+      background: #1A1A26;
+      color: #4A4A6A;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .btn-ghost {
+      color: var(--color-text-secondary);
+      background: transparent;
+      border: none;
+      font-size: 13px;
+      font-weight: 400;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-family: 'Inter', sans-serif;
+      transition: color 0.18s;
+    }
+    .btn-ghost:hover { color: var(--color-primary); }
+
+    .screen { display: none; }
+    .screen.active { display: flex; flex-direction: column; }
+
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-border);
+      transition: all 0.3s;
+    }
+    .progress-dot.done { background: var(--color-accent); }
+    .progress-dot.active {
+      background: var(--color-primary);
+      width: 22px;
+      border-radius: 4px;
+      box-shadow: 0 0 8px var(--color-primary);
+    }
+
+    .progress-line {
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+      transition: background 0.3s;
+    }
+    .progress-line.done { background: var(--color-accent); }
+
+    .tag {
+      display: inline-block;
+      background: var(--color-primary-glow);
+      color: var(--color-primary);
+      border: 1px solid #8B7FE840;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .resultado-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .resultado-card .res-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 6px;
+    }
+    .resultado-card .res-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-primary);
+      line-height: 1.3;
+    }
+
+    .ejercicio-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .ejercicio-num {
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      background: #8B7FE815;
+      color: var(--color-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid #8B7FE830;
+    }
+
+    textarea {
+      width: 100%;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      color: var(--color-text-primary);
+      resize: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      min-height: 80px;
+      background: var(--color-bg-elevated);
+    }
+    textarea::placeholder { color: #4A4A6A; }
+    textarea:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 10px #8B7FE820;
+    }
+
+    .toggle-btn {
+      background: transparent;
+      color: var(--color-accent);
+      border: 1px dashed #64D4C840;
+      border-radius: 8px;
+      padding: 11px 16px;
+      font-size: 13px;
+      font-weight: 400;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .toggle-btn:hover { color: var(--color-text-primary); border-color: var(--color-accent); background: #64D4C810; }
+    .toggle-btn.active { color: var(--color-text-primary); border-color: var(--color-accent); border-style: solid; background: #64D4C810; }
+
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      color: var(--color-text-primary);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: var(--color-bg-elevated);
+      -webkit-appearance: none;
+    }
+    input[type="text"]::placeholder, input[type="email"]::placeholder { color: #4A4A6A; }
+    input[type="text"]:focus, input[type="email"]:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 10px #8B7FE820;
+    }
+    input.error { border-color: #E05A6B; }
+
+    label { color: var(--color-text-secondary); font-size: 13px; font-weight: 400; }
+
+    .fade-in {
+      animation: fadeIn 0.4s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: #F0EFF8;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #2A2A3A; border-radius: 4px; }
+  </style>
+</head>
+<body style="background:#0A0A0F;" class="min-h-screen flex items-start justify-center">
+
+<div id="app" class="w-full max-w-[420px] min-h-screen flex flex-col" style="background:radial-gradient(ellipse at 20% 50%, #8B7FE815 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, #64D4C815 0%, transparent 60%), #0A0A0F;">
+
+  <!-- ═══════════════════════════════════════════
+       PANTALLA 0 — CAPTURA DE CORREO
+  ═══════════════════════════════════════════ -->
+  <div id="screen-0" class="screen active flex-1 px-6 pt-12 pb-8 fade-in">
+    <div class="flex-1 flex flex-col">
+      <!-- Logo / Header -->
+      <div class="text-center mb-10">
+        <p style="font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.2em;color:#64D4C8;text-transform:uppercase;" class="mb-4">Alexa González</p>
+        <h1 style="font-family:'Syne',sans-serif;font-size:38px;font-weight:700;color:#F0EFF8;line-height:1.1;" class="mb-4">Sírvete<br/>Primero</h1>
+        <p style="font-family:'Inter',sans-serif;font-size:15px;font-weight:300;color:#8B8AA8;line-height:1.65;">Identifica a tu amo y da el primer<br/>paso hacia ti.</p>
+      </div>
+
+      <!-- Decorative element -->
+      <div class="flex justify-center mb-10">
+        <div class="w-16 h-16 flex items-center justify-center" style="background:#8B7FE815;border-radius:12px;border:1px solid #8B7FE830;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#64D4C8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+            <path d="M12 8v4l3 3" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="flex flex-col gap-4">
+        <div>
+          <label class="block mb-2" style="color:#8B8AA8;font-size:12px;font-weight:400;letter-spacing:0.03em;">Tu nombre</label>
+          <input type="text" id="input-nombre" placeholder="¿Cómo te llamas?" autocomplete="given-name" />
+          <p id="error-nombre" class="text-xs mt-1 hidden" style="color:#E05A6B;">Por favor escribe tu nombre.</p>
+        </div>
+        <div>
+          <label class="block mb-2" style="color:#8B8AA8;font-size:12px;font-weight:400;letter-spacing:0.03em;">Tu correo electrónico</label>
+          <input type="email" id="input-email" placeholder="tu@correo.com" autocomplete="email" />
+          <p id="error-email" class="text-xs mt-1 hidden" style="color:#E05A6B;">Por favor escribe un correo válido.</p>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <button class="btn-primary" onclick="comenzar()">Comenzar mi ejercicio</button>
+        <p class="text-center text-xs mt-4" style="color:#4A4A6A;">Tu información es privada y segura.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PANTALLA INTRO — LA MESA DE LOS AMOS
+  ═══════════════════════════════════════════ -->
+  <div id="screen-intro" class="screen flex-1 flex-col">
+    <div class="px-6 pt-8 pb-4">
+      <div id="progress-bar-intro" class="progress-container"></div>
+    </div>
+    <div class="flex-1 overflow-y-auto px-6 pb-10 fade-in flex flex-col justify-between">
+
+      <!-- Contenido principal -->
+      <div>
+        <!-- Subtítulo + Título -->
+        <div class="mb-8 mt-2">
+          <p style="font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.2em;color:#64D4C8;text-transform:uppercase;" class="mb-3">Bienvenida a</p>
+          <h2 style="font-family:'Syne',sans-serif;font-size:32px;font-weight:700;color:#F0EFF8;line-height:1.1;">La Mesa<br/>de los Amos</h2>
+        </div>
+
+        <!-- Separador decorativo -->
+        <div style="width:40px;height:2px;background:linear-gradient(90deg,#8B7FE8,#64D4C8);border-radius:2px;" class="mb-8"></div>
+
+        <!-- Cuerpo del texto -->
+        <div style="display:flex;flex-direction:column;gap:20px;">
+
+          <div>
+            <p style="font-family:'Syne',sans-serif;font-size:15px;font-weight:600;color:#F0EFF8;margin-bottom:8px;">¿Qué es un amo?</p>
+            <p style="font-family:'Inter',sans-serif;font-size:15px;font-weight:300;color:#8B8AA8;line-height:1.7;">Un amo es todo aquello a lo que le servimos antes de servirnos a nosotras mismas.</p>
+          </div>
+
+          <p style="font-family:'Inter',sans-serif;font-size:15px;font-weight:300;color:#8B8AA8;line-height:1.7;">No siempre es una persona. Puede ser el miedo, la culpa, la necesidad de aprobación, el perfeccionismo, o cualquier patrón que consuma tu energía antes de que tú te sirvas.</p>
+
+          <p style="font-family:'Inter',sans-serif;font-size:15px;font-weight:300;color:#8B8AA8;line-height:1.7;">Muchas veces no tenemos conciencia de esto — y están ahí, cenando con nosotras y dejándonos hambrientas. Porque ellos toman las decisiones y el control.</p>
+
+          <p style="font-family:'Inter',sans-serif;font-size:15px;font-weight:400;color:#F0EFF8;line-height:1.7;">Hoy te invito a identificar los tuyos y servirte a ti primero.</p>
+
+        </div>
+      </div>
+
+      <!-- Botón + Volver -->
+      <div class="mt-10">
+        <button class="btn-primary" onclick="goTo(1)">Estoy lista</button>
+        <div class="flex justify-center mt-3">
+          <button class="btn-ghost" onclick="goTo(0)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6l6 6"/></svg>
+            Volver
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PASOS 1–4 (contenedor compartido)
+  ═══════════════════════════════════════════ -->
+
+  <!-- PASO 1 -->
+  <div id="screen-1" class="screen flex-1 flex-col">
+    <div class="px-6 pt-8 pb-4">
+      <div id="progress-bar-1" class="progress-container"></div>
+    </div>
+    <div class="flex-1 overflow-y-auto px-6 pb-8 fade-in">
+      <div class="mb-6">
+        <span class="tag">Paso 1 de 4</span>
+        <h2 class="text-xl mt-3 mb-1 leading-snug" style="font-family:'Syne',sans-serif;font-weight:600;color:#F0EFF8;">¿Cuál amo reconoces más en ti ahora mismo?</h2>
+        <p class="text-sm" style="color:#8B8AA8;font-weight:300;">Elige el que más energía te roba.</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mb-4" id="grid-amos">
+        <!-- Cards generadas por JS -->
+      </div>
+
+      <!-- Input libre -->
+      <div id="toggle-amo-wrap" class="mb-6">
+        <button class="toggle-btn" id="toggle-amo-btn" onclick="toggleCustom('amo')">
+          ✏️ El mío es otro — escribirlo
+        </button>
+        <div id="custom-amo-wrap" class="hidden mt-3">
+          <textarea id="custom-amo" placeholder="Describe tu amo con tus palabras..." oninput="onCustomInput('amo')"></textarea>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-1" onclick="goTo(2)" disabled>Continuar</button>
+      <div class="flex justify-center mt-3">
+        <button class="btn-ghost" onclick="goTo('intro')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6l6 6"/></svg>
+          Volver
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 2 -->
+  <div id="screen-2" class="screen flex-1 flex-col">
+    <div class="px-6 pt-8 pb-4">
+      <div id="progress-bar-2" class="progress-container"></div>
+    </div>
+    <div class="flex-1 overflow-y-auto px-6 pb-8 fade-in">
+      <div class="mb-6">
+        <span class="tag">Paso 2 de 4</span>
+        <h2 class="text-xl mt-3 mb-1 leading-snug" style="font-family:'Syne',sans-serif;font-weight:600;color:#F0EFF8;">¿Qué emoción aparece justo antes de servirle?</h2>
+        <p class="text-sm" style="color:#8B8AA8;font-weight:300;">Piensa en el último momento que cediste. ¿Qué sentías segundos antes?</p>
+      </div>
+
+      <div class="flex flex-col gap-3 mb-4" id="list-emociones">
+        <!-- Opciones generadas por JS -->
+      </div>
+
+      <div class="mb-6">
+        <button class="toggle-btn" id="toggle-emo-btn" onclick="toggleCustom('emocion')">
+          ✏️ Escribir la mía
+        </button>
+        <div id="custom-emocion-wrap" class="hidden mt-3">
+          <textarea id="custom-emocion" placeholder="¿Qué emoción sientes tú?" oninput="onCustomInput('emocion')"></textarea>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-2" onclick="goTo(3)" disabled>Continuar</button>
+      <div class="flex justify-center mt-3">
+        <button class="btn-ghost" onclick="goTo(1)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6l6 6"/></svg>
+          Volver
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 3 -->
+  <div id="screen-3" class="screen flex-1 flex-col">
+    <div class="px-6 pt-8 pb-4">
+      <div id="progress-bar-3" class="progress-container"></div>
+    </div>
+    <div class="flex-1 overflow-y-auto px-6 pb-8 fade-in">
+      <div class="mb-6">
+        <span class="tag">Paso 3 de 4</span>
+        <h2 class="text-xl mt-3 mb-1 leading-snug" style="font-family:'Syne',sans-serif;font-weight:600;color:#F0EFF8;">¿Qué hambre hay detrás de esa emoción?</h2>
+        <p class="text-sm" style="color:#8B8AA8;font-weight:300;">El amo es la respuesta que encontraste para una carencia que todavía no has sabido llenar de otra manera.</p>
+      </div>
+
+      <div class="flex flex-col gap-3 mb-4" id="list-carencias">
+        <!-- Opciones generadas por JS -->
+      </div>
+
+      <div class="mb-6">
+        <button class="toggle-btn" id="toggle-car-btn" onclick="toggleCustom('carencia')">
+          ✏️ Escribir la mía
+        </button>
+        <div id="custom-carencia-wrap" class="hidden mt-3">
+          <textarea id="custom-carencia" placeholder="¿Qué hambre o carencia hay en ti?" oninput="onCustomInput('carencia')"></textarea>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-3" onclick="goTo(4)" disabled>Continuar</button>
+      <div class="flex justify-center mt-3">
+        <button class="btn-ghost" onclick="goTo(2)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6l6 6"/></svg>
+          Volver
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 4 -->
+  <div id="screen-4" class="screen flex-1 flex-col">
+    <div class="px-6 pt-8 pb-4">
+      <div id="progress-bar-4" class="progress-container"></div>
+    </div>
+    <div class="flex-1 overflow-y-auto px-6 pb-8 fade-in">
+      <div class="mb-6">
+        <span class="tag">Paso 4 de 4</span>
+        <h2 class="text-xl mt-3 mb-1 leading-snug" style="font-family:'Syne',sans-serif;font-weight:600;color:#F0EFF8;">¿Cómo te vas a servir a ti esta semana?</h2>
+        <p class="text-sm" style="color:#8B8AA8;font-weight:300;">Una acción pequeña, concreta y sostenida que nutra esa carencia real.</p>
+      </div>
+
+      <div class="flex flex-col gap-3 mb-4" id="list-acciones">
+        <!-- Opciones generadas por JS -->
+      </div>
+
+      <div class="mb-6">
+        <button class="toggle-btn" id="toggle-acc-btn" onclick="toggleCustom('accion')">
+          ✏️ Escribir la mía
+        </button>
+        <div id="custom-accion-wrap" class="hidden mt-3">
+          <textarea id="custom-accion" placeholder="¿Qué acción concreta vas a tomar?" oninput="onCustomInput('accion')"></textarea>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-4" onclick="finalizar()" disabled>Ver mi diagnóstico</button>
+      <div class="flex justify-center mt-3">
+        <button class="btn-ghost" onclick="goTo(3)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6l6 6"/></svg>
+          Volver
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PASO 5 — RESULTADO
+  ═══════════════════════════════════════════ -->
+  <div id="screen-5" class="screen flex-1 flex-col">
+    <div class="flex-1 overflow-y-auto px-6 pt-8 pb-12 fade-in">
+      <!-- Header resultado -->
+      <div class="text-center mb-8">
+        <div class="flex justify-center mb-4">
+          <div class="w-16 h-16 flex items-center justify-center" style="background:#8B7FE815;border-radius:12px;border:1px solid #8B7FE830;box-shadow:0 0 20px #8B7FE820;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#64D4C8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+              <path d="M9 12l2 2l4 -4" />
+            </svg>
+          </div>
+        </div>
+        <p style="font-size:10px;font-weight:500;letter-spacing:0.2em;color:#64D4C8;text-transform:uppercase;" class="mb-1">Tu diagnóstico</p>
+        <h2 id="resultado-nombre" style="font-family:'Syne',sans-serif;font-size:32px;font-weight:700;color:#F0EFF8;"></h2>
+      </div>
+
+      <!-- Resumen -->
+      <div class="flex flex-col gap-3 mb-8">
+        <div class="resultado-card">
+          <p class="res-label">Tu amo más molesto</p>
+          <p id="res-amo" class="res-value"></p>
+        </div>
+        <div class="resultado-card">
+          <p class="res-label">La emoción que lo activa</p>
+          <p id="res-emocion" class="res-value"></p>
+        </div>
+        <div class="resultado-card">
+          <p class="res-label">El hambre detrás</p>
+          <p id="res-carencia" class="res-value"></p>
+        </div>
+        <div class="resultado-card">
+          <p class="res-label">Tu acción esta semana</p>
+          <p id="res-accion" class="res-value"></p>
+        </div>
+      </div>
+
+      <!-- Ejercicios -->
+      <div class="mb-8">
+        <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:600;color:#F0EFF8;" class="mb-4">Tres ejercicios para sostener tu proceso</h3>
+        <div class="flex flex-col gap-3" id="ejercicios-container">
+          <!-- Generados por JS -->
+        </div>
+      </div>
+
+      <!-- Frase de cierre -->
+      <div style="background:#12121A;border:1px solid #8B7FE840;border-radius:12px;box-shadow:0 0 30px #8B7FE815;" class="px-6 py-6 mb-6 text-center">
+        <p style="color:#F0EFF8;font-family:'Syne',sans-serif;font-size:17px;font-weight:500;line-height:1.65;">"La acción no es decirle que no al amo.<br/>La acción es decirte que sí a ti."</p>
+        <p style="color:#64D4C8;font-size:12px;font-weight:400;letter-spacing:0.1em;" class="mt-4">— Alexa González</p>
+      </div>
+
+      <!-- Nota de email -->
+      <div class="text-center mb-8">
+        <p id="nota-email" style="color:#4A4A6A;font-size:13px;font-weight:300;"></p>
+      </div>
+
+      <!-- Volver a empezar -->
+      <button class="btn-primary" onclick="reiniciar()" style="background:transparent;color:#8B7FE8;border:1px solid #8B7FE840;box-shadow:none;">
+        Hacer el ejercicio de nuevo
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading overlay -->
+  <div id="loading-overlay" class="hidden fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50">
+    <div class="text-center">
+      <div class="spinner mb-4" style="width:32px;height:32px;border-width:3px;border-color:#EAE9F8;border-top-color:#534AB7;margin:0 auto;"></div>
+      <p class="text-gray-500 text-sm">Preparando tu diagnóstico...</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIGURACIÓN DE EMAILJS
+// ══════════════════════════════════════════
+// Para activar el envío de correos:
+// 1. Crea cuenta en emailjs.com
+// 2. Crea un servicio de email y obtén tu Service ID
+// 3. Crea un template (ver estructura en README)
+// 4. Reemplaza los valores de abajo
+
+const EMAILJS_CONFIG = {
+  publicKey:  'TU_PUBLIC_KEY_AQUI',   // Account > API Keys
+  serviceId:  'TU_SERVICE_ID_AQUI',   // Email Services
+  templateId: 'TU_TEMPLATE_ID_AQUI',  // Email Templates
+};
+
+// ══════════════════════════════════════════
+// DATOS
+// ══════════════════════════════════════════
+
+const AMOS = [
+  { id: 'culpa',    icon: '💔', label: 'La Culpa',           desc: 'Aparece cuando decides algo para ti' },
+  { id: 'miedo',    icon: '😰', label: 'El Miedo',           desc: 'No te deja lanzar ni cobrar lo que vales' },
+  { id: 'adiccion', icon: '🔄', label: 'La Adicción',        desc: 'Al trabajo, la aprobación o relaciones que duelen' },
+  { id: 'opinion',  icon: '👥', label: 'La Opinión Ajena',   desc: 'Vive en tu cabeza sin pagar renta' },
+  { id: 'perfec',   icon: '✨', label: 'El Perfeccionismo',  desc: 'Siempre tiene una razón para que no estés lista' },
+];
+
+const EMOCIONES = [
+  { id: 'ansiedad',    label: 'Ansiedad',               desc: 'mi cuerpo se tensa, no puedo parar' },
+  { id: 'inseguridad', label: 'Inseguridad',             desc: 'siento que no soy suficiente' },
+  { id: 'miedo-dec',   label: 'Miedo a decepcionar',    desc: 'no soporto que alguien quede mal conmigo' },
+  { id: 'comparacion', label: 'Comparación',             desc: 'siento que las demás van más adelante' },
+  { id: 'vacio',       label: 'Vacío',                   desc: 'hay algo que no sé nombrar pero me impulsa a actuar' },
+  { id: 'agotamiento', label: 'Agotamiento',             desc: 'cedo porque ya no tengo energía para resistir' },
+];
+
+const CARENCIAS = [
+  { id: 'aprobacion',    label: 'Necesito aprobación',       desc: 'quiero que los demás vean que valgo' },
+  { id: 'suficiencia',   label: 'Quiero sentirme suficiente', desc: 'nunca siento que lo que hago es bastante' },
+  { id: 'amor',          label: 'Busco amor o conexión',      desc: 'tengo miedo a quedarme sola o a no pertenecer' },
+  { id: 'control',       label: 'Necesito control',           desc: 'me angustia lo que no puedo predecir o manejar' },
+  { id: 'reconocimiento',label: 'Quiero reconocimiento',      desc: 'que mi esfuerzo sea visto y valorado' },
+  { id: 'alivio',        label: 'Busco alivio',               desc: 'necesito escapar de la presión aunque sea un momento' },
+];
+
+const ACCIONES = [
+  { id: 'no-culpa',    label: 'Decir que no sin culpa',  desc: 'Voy a decir que no a una sola cosa que normalmente acepto por no sentir culpa' },
+  { id: 'tarde-libre', label: 'Una tarde libre',         desc: 'Voy a tomar una tarde libre sin justificarme ante nadie' },
+  { id: 'lanzar',      label: 'Publicar algo postergado',desc: 'Voy a publicar o lanzar algo que he estado postergando por miedo a lo que dirán' },
+  { id: 'ahorro',      label: 'Depositarme a mí primero',desc: 'Voy a abrir una cuenta de ahorro y depositarme algo a mí primero, antes de pagar cualquier otra cosa' },
+  { id: 'conversacion',label: 'Una conversación difícil',desc: 'Voy a tener una conversación difícil que he estado evitando' },
+  { id: 'nutrir',      label: '20 min para mí, sin culpa',desc: 'Voy a dedicar 20 minutos al día a algo que me nutra, sin culpa' },
+];
+
+const EJERCICIOS_POR_AMO = {
+  culpa: [
+    'Esta semana, cada vez que sientas culpa por hacer algo para ti, escríbelo. Solo observa, sin juzgarte.',
+    'Di que no a una sola cosa que normalmente aceptarías para no sentirte culpable.',
+    'Cada noche anota una decisión que tomaste para ti ese día. Estás re-entrenando la relación contigo misma.',
+  ],
+  miedo: [
+    'Identifica una cosa que has postergado por miedo. Escríbela y pregúntate: ¿cuánto me está costando no hacerlo?',
+    'Haz esa cosa que llevas tiempo evitando. El miedo no desaparece esperando.',
+    'Cuando sientas miedo antes de actuar, di en voz alta: me da miedo y lo voy a hacer de todas formas.',
+  ],
+  adiccion: [
+    'Identifica el momento del día en que más recurres a tu amo. ¿Qué emoción lo precede? Escríbela.',
+    'Reemplaza una vez esa conducta con algo que te nutra: un baño, una caminata, diez minutos de silencio.',
+    'Cuéntale a alguien de confianza que estás trabajando en este patrón. La adicción vive en el secreto.',
+  ],
+  opinion: [
+    'Antes de cada decisión esta semana pregúntate: ¿esto lo hago porque lo quiero yo, o por lo que van a pensar?',
+    'Haz algo que llevas tiempo queriendo hacer y que no has hecho por lo que dirán. Algo pequeño cuenta.',
+    'Reduce 15 minutos al día revisando likes o reacciones. Obsérvate sin juzgarte.',
+  ],
+  perfec: [
+    'Lanza algo esta semana que no esté perfecto. Un mensaje, una publicación, una idea. Lanzarlo imperfecto es el ejercicio.',
+    'Pon un tiempo límite a una tarea. Cuando se acabe el tiempo, la das por lista.',
+    'Escribe tres cosas que hiciste bien esta semana aunque no hayan quedado perfectas. El progreso también cuenta.',
+  ],
+  custom: [
+    'Esta semana observa cuándo aparece tu amo. Solo observa, sin juzgarte.',
+    'Identifica qué emoción lo activa y escríbela cada vez que aparezca.',
+    'Elige una acción pequeña y concreta que nutra la carencia real que hay detrás.',
+  ],
+};
+
+// ══════════════════════════════════════════
+// ESTADO
+// ══════════════════════════════════════════
+
+const state = {
+  nombre: '',
+  email: '',
+  amo: null,        // id o null
+  amoLabel: '',
+  amoCustom: '',
+  emocion: null,
+  emocionLabel: '',
+  emocionCustom: '',
+  carencia: null,
+  carenciaLabel: '',
+  carenciaCustom: '',
+  accion: null,
+  accionLabel: '',
+  accionCustom: '',
+};
+
+// ══════════════════════════════════════════
+// RENDER INICIAL
+// ══════════════════════════════════════════
+
+function renderAmos() {
+  const grid = document.getElementById('grid-amos');
+  grid.innerHTML = AMOS.map(a => `
+    <div class="grid-card relative" id="card-amo-${a.id}" onclick="selectAmo('${a.id}', '${a.label}')">
+      <div class="grid-check">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#8B7FE8" stroke="none">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.707 7.707l-5.5 5.5a1 1 0 01-1.414 0l-2.5-2.5a1 1 0 011.414-1.414L10.5 13.086l4.793-4.793a1 1 0 011.414 1.414z"/>
+        </svg>
+      </div>
+      <span class="text-2xl">${a.icon}</span>
+      <p class="card-name text-sm font-semibold leading-tight" style="font-family:'Syne',sans-serif;">${a.label}</p>
+      <p class="text-xs leading-snug" style="color:#8B8AA8;font-weight:300;">${a.desc}</p>
+    </div>
+  `).join('');
+}
+
+function renderList(containerId, items, field) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = items.map(item => `
+    <button class="option-card" id="card-${field}-${item.id}" onclick="selectOption('${field}', '${item.id}', '${escapeSingle(item.label)}')">
+      <div class="radio-dot"></div>
+      <div>
+        <p class="text-sm font-semibold leading-snug" style="color:#F0EFF8;font-family:'Syne',sans-serif;font-weight:500;">${item.label}</p>
+        <p class="option-label text-xs mt-0.5 leading-snug">${item.desc}</p>
+      </div>
+    </button>
+  `).join('');
+}
+
+function escapeSingle(str) {
+  return str.replace(/'/g, "\\'");
+}
+
+// ══════════════════════════════════════════
+// NAVEGACIÓN
+// ══════════════════════════════════════════
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + id);
+  el.classList.add('active');
+  // Animación fade-in
+  const inner = el.querySelector('.fade-in') || el;
+  inner.style.animation = 'none';
+  void inner.offsetWidth;
+  inner.style.animation = '';
+  // Scroll to top
+  window.scrollTo(0, 0);
+  el.scrollTop = 0;
+  // Render barra de progreso
+  if (id === 'intro' || (id >= 1 && id <= 4)) renderProgress(id);
+}
+
+function renderProgress(step) {
+  // step: 'intro'=0, 1, 2, 3, 4  — total 5 dots
+  const stepNum = (step === 'intro') ? 0 : step;
+  const barId = 'progress-bar-' + step;
+  const bar = document.getElementById(barId);
+  if (!bar) return;
+  let html = '';
+  for (let i = 0; i <= 4; i++) {
+    if (i < stepNum) {
+      html += `<div class="progress-dot done"></div>`;
+    } else if (i === stepNum) {
+      html += `<div class="progress-dot active"></div>`;
+    } else {
+      html += `<div class="progress-dot"></div>`;
+    }
+    if (i < 4) html += `<div class="progress-line ${i < stepNum ? 'done' : ''}"></div>`;
+  }
+  bar.className = 'progress-container flex items-center gap-1 justify-center';
+  bar.innerHTML = html;
+}
+
+function goTo(step) {
+  showScreen(step);
+}
+
+// ══════════════════════════════════════════
+// PANTALLA 0 — COMENZAR
+// ══════════════════════════════════════════
+
+function comenzar() {
+  const nombre = document.getElementById('input-nombre').value.trim();
+  const email = document.getElementById('input-email').value.trim();
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  let ok = true;
+  if (!nombre) {
+    document.getElementById('error-nombre').classList.remove('hidden');
+    document.getElementById('input-nombre').classList.add('error');
+    ok = false;
+  } else {
+    document.getElementById('error-nombre').classList.add('hidden');
+    document.getElementById('input-nombre').classList.remove('error');
+  }
+  if (!email || !emailRe.test(email)) {
+    document.getElementById('error-email').classList.remove('hidden');
+    document.getElementById('input-email').classList.add('error');
+    ok = false;
+  } else {
+    document.getElementById('error-email').classList.add('hidden');
+    document.getElementById('input-email').classList.remove('error');
+  }
+  if (!ok) return;
+
+  state.nombre = nombre;
+  state.email = email;
+  showScreen('intro');
+}
+
+// ══════════════════════════════════════════
+// SELECCIONES
+// ══════════════════════════════════════════
+
+function selectAmo(id, label) {
+  // Deselect custom
+  document.getElementById('toggle-amo-btn').classList.remove('active');
+  document.getElementById('custom-amo-wrap').classList.add('hidden');
+  document.getElementById('custom-amo').value = '';
+  state.amoCustom = '';
+
+  // Deselect all
+  AMOS.forEach(a => document.getElementById('card-amo-' + a.id).classList.remove('selected'));
+  document.getElementById('card-amo-' + id).classList.add('selected');
+
+  state.amo = id;
+  state.amoLabel = label;
+  document.getElementById('btn-1').disabled = false;
+}
+
+function selectOption(field, id, label) {
+  // Deselect custom
+  const toggleBtn = document.getElementById('toggle-' + shortField(field) + '-btn');
+  const customWrap = document.getElementById('custom-' + field + '-wrap');
+  const customInput = document.getElementById('custom-' + field);
+  if (toggleBtn) toggleBtn.classList.remove('active');
+  if (customWrap) customWrap.classList.add('hidden');
+  if (customInput) { customInput.value = ''; state[field + 'Custom'] = ''; }
+
+  // Map list items for deselect
+  const map = { emocion: EMOCIONES, carencia: CARENCIAS, accion: ACCIONES };
+  map[field].forEach(item => {
+    const el = document.getElementById('card-' + field + '-' + item.id);
+    if (el) el.classList.remove('selected');
+  });
+
+  document.getElementById('card-' + field + '-' + id).classList.add('selected');
+  state[field] = id;
+  state[field + 'Label'] = label;
+
+  const btnMap = { emocion: 'btn-2', carencia: 'btn-3', accion: 'btn-4' };
+  document.getElementById(btnMap[field]).disabled = false;
+}
+
+function shortField(f) {
+  return { emocion: 'emo', carencia: 'car', accion: 'acc' }[f] || f;
+}
+
+function toggleCustom(field) {
+  const wrapId = 'custom-' + field + '-wrap';
+  const btnId = 'toggle-' + (field === 'amo' ? 'amo' : shortField(field)) + '-btn';
+  const wrap = document.getElementById(wrapId);
+  const btn = document.getElementById(btnId);
+  const isOpen = !wrap.classList.contains('hidden');
+
+  if (isOpen) {
+    wrap.classList.add('hidden');
+    btn.classList.remove('active');
+    state[field + 'Custom'] = '';
+    // Check if any card was selected before
+    checkBtn(field);
+  } else {
+    // Deselect cards
+    if (field === 'amo') {
+      AMOS.forEach(a => document.getElementById('card-amo-' + a.id).classList.remove('selected'));
+      state.amo = 'custom';
+      state.amoLabel = '';
+    } else {
+      const map = { emocion: EMOCIONES, carencia: CARENCIAS, accion: ACCIONES };
+      map[field].forEach(item => {
+        const el = document.getElementById('card-' + field + '-' + item.id);
+        if (el) el.classList.remove('selected');
+      });
+      state[field] = 'custom';
+      state[field + 'Label'] = '';
+    }
+    wrap.classList.remove('hidden');
+    btn.classList.add('active');
+    document.getElementById('custom-' + field).focus();
+    checkBtn(field);
+  }
+}
+
+function onCustomInput(field) {
+  const val = document.getElementById('custom-' + field).value.trim();
+  state[field + 'Custom'] = val;
+  if (field === 'amo') state.amoLabel = val;
+  else state[field + 'Label'] = val;
+  checkBtn(field);
+}
+
+function checkBtn(field) {
+  const btnMap = { amo: 'btn-1', emocion: 'btn-2', carencia: 'btn-3', accion: 'btn-4' };
+  const btn = document.getElementById(btnMap[field]);
+  let enabled = false;
+  if (field === 'amo') {
+    enabled = (state.amo && state.amo !== 'custom') || (state.amo === 'custom' && state.amoCustom.length > 0);
+  } else {
+    enabled = (state[field] && state[field] !== 'custom') || (state[field] === 'custom' && state[field + 'Custom'].length > 0);
+  }
+  btn.disabled = !enabled;
+}
+
+// ══════════════════════════════════════════
+// FINALIZAR
+// ══════════════════════════════════════════
+
+async function finalizar() {
+  const btn4 = document.getElementById('btn-4');
+  btn4.innerHTML = '<span class="spinner"></span>';
+  btn4.disabled = true;
+
+  // Obtener etiquetas finales
+  const amoFinal = state.amo === 'custom' ? state.amoCustom : state.amoLabel;
+  const emoFinal = state.emocion === 'custom' ? state.emocionCustom : state.emocionLabel;
+  const carFinal = state.carencia === 'custom' ? state.carenciaCustom : state.carenciaLabel;
+  const accFinal = state.accion === 'custom' ? state.accionCustom : state.accionLabel;
+
+  // Ejercicios
+  const ejerciciosKey = (state.amo === 'custom') ? 'custom' : state.amo;
+  const ejercicios = EJERCICIOS_POR_AMO[ejerciciosKey] || EJERCICIOS_POR_AMO.custom;
+
+  // Render resultado
+  document.getElementById('resultado-nombre').textContent = state.nombre;
+  document.getElementById('res-amo').textContent = amoFinal;
+  document.getElementById('res-emocion').textContent = emoFinal;
+  document.getElementById('res-carencia').textContent = carFinal;
+  document.getElementById('res-accion').textContent = accFinal;
+  document.getElementById('nota-email').textContent = `Hemos enviado este resumen a ${state.email}`;
+
+  const ec = document.getElementById('ejercicios-container');
+  ec.innerHTML = ejercicios.map((e, i) => `
+    <div class="ejercicio-card">
+      <div class="ejercicio-num">${i + 1}</div>
+      <p class="text-sm text-gray-700 leading-relaxed">${e}</p>
+    </div>
+  `).join('');
+
+  // Enviar email
+  try {
+    await enviarEmail({ amoFinal, emoFinal, carFinal, accFinal, ejercicios });
+  } catch (err) {
+    console.warn('Email no enviado:', err);
+  }
+
+  // Guardar en Airtable
+  try {
+    await guardarEnAirtable({ amoFinal, emoFinal, carFinal, accFinal });
+  } catch (err) {
+    console.warn('Airtable no guardado:', err);
+  }
+
+  btn4.innerHTML = 'Ver mi diagnóstico';
+  btn4.disabled = false;
+  showScreen(5);
+}
+
+// ══════════════════════════════════════════
+// EMAIL — EMAILJS
+// ══════════════════════════════════════════
+
+async function enviarEmail({ amoFinal, emoFinal, carFinal, accFinal, ejercicios }) {
+  if (EMAILJS_CONFIG.publicKey === 'TU_PUBLIC_KEY_AQUI') return; // no configurado
+
+  // Carga EmailJS dinámicamente
+  if (!window.emailjs) {
+    await new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+      s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+    emailjs.init(EMAILJS_CONFIG.publicKey);
+  }
+
+  const templateParams = {
+    to_name:   state.nombre,
+    to_email:  state.email,
+    amo:       amoFinal,
+    emocion:   emoFinal,
+    carencia:  carFinal,
+    accion:    accFinal,
+    ejercicio_1: ejercicios[0],
+    ejercicio_2: ejercicios[1],
+    ejercicio_3: ejercicios[2],
+  };
+
+  await emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, templateParams);
+}
+
+// ══════════════════════════════════════════
+// BASE DE DATOS — AIRTABLE
+// ══════════════════════════════════════════
+// Instrucciones:
+// 1. Crea una base llamada "Sírvete Primero" en airtable.com
+// 2. Crea una tabla llamada "Respuestas" con los campos:
+//    Nombre, Email, Amo, Emocion, Carencia, Accion, Fecha
+// 3. Ve a airtable.com/create/tokens → crea token con scope "data.records:write"
+// 4. Reemplaza los valores de abajo con los tuyos
+
+// El token de Airtable vive en Vercel como variable de entorno (AIRTABLE_TOKEN)
+// La app llama a /api/guardar — un endpoint serverless que guarda de forma segura
+const AIRTABLE_CONFIG = { habilitado: true };
+
+async function guardarEnAirtable({ amoFinal, emoFinal, carFinal, accFinal }) {
+  // Llama al endpoint serverless /api/guardar (el token vive en Vercel, no aquí)
+  const res = await fetch('/api/guardar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      nombre:   state.nombre,
+      email:    state.email,
+      amo:      amoFinal,
+      emocion:  emoFinal,
+      carencia: carFinal,
+      accion:   accFinal,
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    console.warn('Error guardando en Airtable:', err);
+  }
+}
+
+// ══════════════════════════════════════════
+// REINICIAR
+// ══════════════════════════════════════════
+
+function reiniciar() {
+  // Reset estado
+  Object.assign(state, {
+    nombre: '', email: '',
+    amo: null, amoLabel: '', amoCustom: '',
+    emocion: null, emocionLabel: '', emocionCustom: '',
+    carencia: null, carenciaLabel: '', carenciaCustom: '',
+    accion: null, accionLabel: '', accionCustom: '',
+  });
+  // Reset inputs
+  document.getElementById('input-nombre').value = '';
+  document.getElementById('input-email').value = '';
+  // Reset custom wraps
+  ['amo', 'emocion', 'carencia', 'accion'].forEach(f => {
+    const wrap = document.getElementById('custom-' + f + '-wrap');
+    if (wrap) wrap.classList.add('hidden');
+    const ta = document.getElementById('custom-' + f);
+    if (ta) ta.value = '';
+    const btn = document.getElementById('toggle-' + (f === 'amo' ? 'amo' : shortField(f)) + '-btn');
+    if (btn) btn.classList.remove('active');
+  });
+  // Re-render grids/lists
+  renderAmos();
+  renderList('list-emociones', EMOCIONES, 'emocion');
+  renderList('list-carencias', CARENCIAS, 'carencia');
+  renderList('list-acciones', ACCIONES, 'accion');
+  // Disable continue buttons
+  ['btn-1', 'btn-2', 'btn-3', 'btn-4'].forEach(id => {
+    document.getElementById(id).disabled = true;
+  });
+  showScreen(0);
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+
+renderAmos();
+renderList('list-emociones', EMOCIONES, 'emocion');
+renderList('list-carencias', CARENCIAS, 'carencia');
+renderList('list-acciones', ACCIONES, 'accion');
+
+// Enter key en screen 0
+document.getElementById('input-nombre').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('input-email').focus(); });
+document.getElementById('input-email').addEventListener('keydown', e => { if (e.key === 'Enter') comenzar(); });
+</script>
+</body>
+</html>
