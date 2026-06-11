@@ -38,7 +38,6 @@ export default async function handler(req, res) {
             Emocion:  emocion  || '',
             Carencia: carencia || '',
             Accion:   accion   || '',
-            Fecha:    new Date().toISOString(),
           }
         }),
       }
