@@ -661,20 +661,7 @@
 </div>
 
 <script>
-// ══════════════════════════════════════════
-// CONFIGURACIÓN DE EMAILJS
-// ══════════════════════════════════════════
-// Para activar el envío de correos:
-// 1. Crea cuenta en emailjs.com
-// 2. Crea un servicio de email y obtén tu Service ID
-// 3. Crea un template (ver estructura en README)
-// 4. Reemplaza los valores de abajo
-
-const EMAILJS_CONFIG = {
-  publicKey:  'TU_PUBLIC_KEY_AQUI',   // Account > API Keys
-  serviceId:  'TU_SERVICE_ID_AQUI',   // Email Services
-  templateId: 'TU_TEMPLATE_ID_AQUI',  // Email Templates
-};
+// Email enviado via /api/email (Resend) — configurado en Vercel env vars
 
 // ══════════════════════════════════════════
 // DATOS
@@ -1042,36 +1029,27 @@ async function finalizar() {
 }
 
 // ══════════════════════════════════════════
-// EMAIL — EMAILJS
+// EMAIL — RESEND (via /api/email serverless)
 // ══════════════════════════════════════════
 
-async function enviarEmail({ amoFinal, emoFinal, carFinal, accFinal, ejercicios }) {
-  if (EMAILJS_CONFIG.publicKey === 'TU_PUBLIC_KEY_AQUI') return; // no configurado
+async function enviarEmail({ amoFinal, emoFinal, carFinal, accFinal }) {
+  const res = await fetch('/api/email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      nombre:   state.nombre,
+      email:    state.email,
+      amo:      amoFinal,
+      emocion:  emoFinal,
+      carencia: carFinal,
+      accion:   accFinal,
+    }),
+  });
 
-  // Carga EmailJS dinámicamente
-  if (!window.emailjs) {
-    await new Promise((res, rej) => {
-      const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-      s.onload = res; s.onerror = rej;
-      document.head.appendChild(s);
-    });
-    emailjs.init(EMAILJS_CONFIG.publicKey);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    console.warn('Error enviando email:', err);
   }
-
-  const templateParams = {
-    to_name:   state.nombre,
-    to_email:  state.email,
-    amo:       amoFinal,
-    emocion:   emoFinal,
-    carencia:  carFinal,
-    accion:    accFinal,
-    ejercicio_1: ejercicios[0],
-    ejercicio_2: ejercicios[1],
-    ejercicio_3: ejercicios[2],
-  };
-
-  await emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, templateParams);
 }
 
 // ══════════════════════════════════════════
