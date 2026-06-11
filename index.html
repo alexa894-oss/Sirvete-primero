@@ -1033,22 +1033,28 @@ async function finalizar() {
 // ══════════════════════════════════════════
 
 async function enviarEmail({ amoFinal, emoFinal, carFinal, accFinal }) {
-  const res = await fetch('/api/email', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      nombre:   state.nombre,
-      email:    state.email,
-      amo:      amoFinal,
-      emocion:  emoFinal,
-      carencia: carFinal,
-      accion:   accFinal,
-    }),
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    console.warn('Error enviando email:', err);
+  console.log('📧 Intentando enviar email a:', state.email);
+  try {
+    const res = await fetch('/api/email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre:   state.nombre,
+        email:    state.email,
+        amo:      amoFinal,
+        emocion:  emoFinal,
+        carencia: carFinal,
+        accion:   accFinal,
+      }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      console.error('❌ Error Resend:', res.status, JSON.stringify(data));
+    } else {
+      console.log('✅ Email enviado OK:', JSON.stringify(data));
+    }
+  } catch (err) {
+    console.error('❌ Fetch /api/email falló:', err.message);
   }
 }
 
