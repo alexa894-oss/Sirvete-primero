@@ -65,25 +65,26 @@ export default async function handler(req, res) {
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body style="margin:0;padding:0;background:#0A0A0F;font-family:'Inter',Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0A0A0F;padding:40px 20px;">
+<body style="margin:0;padding:0;background:#070D1A;font-family:'Georgia',serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#070D1A;padding:40px 20px;">
     <tr>
       <td align="center">
-        <table width="100%" style="max-width:520px;background:#12121A;border-radius:16px;border:1px solid #2A2A3A;overflow:hidden;">
+        <table width="100%" style="max-width:520px;background:#0C1628;border-radius:16px;border:1px solid #1A2E4A;overflow:hidden;">
 
           <!-- Header -->
           <tr>
-            <td style="padding:40px 40px 32px;text-align:center;border-bottom:1px solid #2A2A3A;">
-              <p style="margin:0 0 8px;font-size:11px;font-weight:400;letter-spacing:0.2em;color:#64D4C8;text-transform:uppercase;">Alexa González</p>
-              <h1 style="margin:0;font-size:28px;font-weight:700;color:#F0EFF8;line-height:1.2;">Sírvete Primero</h1>
+            <td style="padding:40px 40px 32px;text-align:center;border-bottom:1px solid #1A2E4A;">
+              <p style="margin:0 0 4px;font-size:24px;font-weight:700;color:#C9A055;font-style:italic;letter-spacing:-0.5px;">AG</p>
+              <p style="margin:0 0 8px;font-size:10px;font-weight:400;letter-spacing:0.25em;color:#C9A055;text-transform:uppercase;font-family:'Arial',sans-serif;">Alexa González</p>
+              <h1 style="margin:0;font-size:28px;font-weight:600;color:#F5F0E8;line-height:1.2;font-family:'Georgia',serif;">Sírvete Primero</h1>
             </td>
           </tr>
 
           <!-- Saludo -->
           <tr>
             <td style="padding:32px 40px 0;">
-              <p style="margin:0 0 6px;font-size:11px;font-weight:500;letter-spacing:0.15em;color:#64D4C8;text-transform:uppercase;">Tu diagnóstico</p>
-              <h2 style="margin:0 0 24px;font-size:26px;font-weight:700;color:#F0EFF8;">${nombre}</h2>
+              <p style="margin:0 0 6px;font-size:10px;font-weight:500;letter-spacing:0.2em;color:#C9A055;text-transform:uppercase;font-family:'Arial',sans-serif;">Tu diagnóstico</p>
+              <h2 style="margin:0 0 24px;font-size:28px;font-weight:600;color:#F5F0E8;font-family:'Georgia',serif;">${nombre}</h2>
             </td>
           </tr>
 
@@ -93,36 +94,36 @@ export default async function handler(req, res) {
 
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:12px;">
                 <tr>
-                  <td style="background:#1A1A26;border:1px solid #2A2A3A;border-radius:10px;padding:14px 16px;">
-                    <p style="margin:0 0 4px;font-size:10px;font-weight:500;letter-spacing:0.14em;color:#64D4C8;text-transform:uppercase;">Tu amo más molesto</p>
-                    <p style="margin:0;font-size:17px;font-weight:600;color:#8B7FE8;">${amo}</p>
+                  <td style="background:#112040;border:1px solid #1A2E4A;border-radius:10px;padding:14px 16px;">
+                    <p style="margin:0 0 4px;font-size:10px;font-weight:500;letter-spacing:0.14em;color:#C9A055;text-transform:uppercase;font-family:'Arial',sans-serif;">Tu amo más molesto</p>
+                    <p style="margin:0;font-size:18px;font-weight:600;color:#E8D5A3;font-family:'Georgia',serif;">${amo}</p>
                   </td>
                 </tr>
               </table>
 
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:12px;">
                 <tr>
-                  <td style="background:#1A1A26;border:1px solid #2A2A3A;border-radius:10px;padding:14px 16px;">
-                    <p style="margin:0 0 4px;font-size:10px;font-weight:500;letter-spacing:0.14em;color:#64D4C8;text-transform:uppercase;">La emoción que lo activa</p>
-                    <p style="margin:0;font-size:17px;font-weight:600;color:#8B7FE8;">${emocion}</p>
+                  <td style="background:#112040;border:1px solid #1A2E4A;border-radius:10px;padding:14px 16px;">
+                    <p style="margin:0 0 4px;font-size:10px;font-weight:500;letter-spacing:0.14em;color:#C9A055;text-transform:uppercase;font-family:'Arial',sans-serif;">La emoción que lo activa</p>
+                    <p style="margin:0;font-size:18px;font-weight:600;color:#E8D5A3;font-family:'Georgia',serif;">${emocion}</p>
                   </td>
                 </tr>
               </table>
 
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:12px;">
                 <tr>
-                  <td style="background:#1A1A26;border:1px solid #2A2A3A;border-radius:10px;padding:14px 16px;">
-                    <p style="margin:0 0 4px;font-size:10px;font-weight:500;letter-spacing:0.14em;color:#64D4C8;text-transform:uppercase;">El hambre detrás</p>
-                    <p style="margin:0;font-size:17px;font-weight:600;color:#8B7FE8;">${carencia}</p>
+                  <td style="background:#112040;border:1px solid #1A2E4A;border-radius:10px;padding:14px 16px;">
+                    <p style="margin:0 0 4px;font-size:10px;font-weight:500;letter-spacing:0.14em;color:#C9A055;text-transform:uppercase;font-family:'Arial',sans-serif;">El hambre detrás</p>
+                    <p style="margin:0;font-size:18px;font-weight:600;color:#E8D5A3;font-family:'Georgia',serif;">${carencia}</p>
                   </td>
                 </tr>
               </table>
 
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
                 <tr>
-                  <td style="background:#1A1A26;border:1px solid #2A2A3A;border-radius:10px;padding:14px 16px;">
-                    <p style="margin:0 0 4px;font-size:10px;font-weight:500;letter-spacing:0.14em;color:#64D4C8;text-transform:uppercase;">Tu acción esta semana</p>
-                    <p style="margin:0;font-size:17px;font-weight:600;color:#8B7FE8;">${accion}</p>
+                  <td style="background:#112040;border:1px solid #1A2E4A;border-radius:10px;padding:14px 16px;">
+                    <p style="margin:0 0 4px;font-size:10px;font-weight:500;letter-spacing:0.14em;color:#C9A055;text-transform:uppercase;font-family:'Arial',sans-serif;">Tu acción esta semana</p>
+                    <p style="margin:0;font-size:18px;font-weight:600;color:#E8D5A3;font-family:'Georgia',serif;">${accion}</p>
                   </td>
                 </tr>
               </table>
@@ -133,15 +134,15 @@ export default async function handler(req, res) {
           <!-- Ejercicios -->
           <tr>
             <td style="padding:0 40px 32px;">
-              <p style="margin:0 0 16px;font-size:15px;font-weight:600;color:#F0EFF8;">Tres ejercicios para sostener tu proceso</p>
+              <p style="margin:0 0 16px;font-size:16px;font-weight:600;color:#F5F0E8;font-family:'Georgia',serif;">Tres ejercicios para sostener tu proceso</p>
 
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
                 <tr>
                   <td width="32" valign="top">
-                    <div style="width:28px;height:28px;background:#8B7FE815;border:1px solid #8B7FE830;border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:500;color:#64D4C8;">1</div>
+                    <div style="width:28px;height:28px;background:#C9A05515;border:1px solid #C9A05530;border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:500;color:#C9A055;font-family:'Arial',sans-serif;">1</div>
                   </td>
                   <td style="padding-left:12px;">
-                    <p style="margin:0;font-size:14px;font-weight:300;color:#8B8AA8;line-height:1.6;">${ejercicios[0]}</p>
+                    <p style="margin:0;font-size:14px;color:#8A8070;line-height:1.6;font-family:'Arial',sans-serif;">${ejercicios[0]}</p>
                   </td>
                 </tr>
               </table>
@@ -149,10 +150,10 @@ export default async function handler(req, res) {
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
                 <tr>
                   <td width="32" valign="top">
-                    <div style="width:28px;height:28px;background:#8B7FE815;border:1px solid #8B7FE830;border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:500;color:#64D4C8;">2</div>
+                    <div style="width:28px;height:28px;background:#C9A05515;border:1px solid #C9A05530;border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:500;color:#C9A055;font-family:'Arial',sans-serif;">2</div>
                   </td>
                   <td style="padding-left:12px;">
-                    <p style="margin:0;font-size:14px;font-weight:300;color:#8B8AA8;line-height:1.6;">${ejercicios[1]}</p>
+                    <p style="margin:0;font-size:14px;color:#8A8070;line-height:1.6;font-family:'Arial',sans-serif;">${ejercicios[1]}</p>
                   </td>
                 </tr>
               </table>
@@ -160,10 +161,10 @@ export default async function handler(req, res) {
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td width="32" valign="top">
-                    <div style="width:28px;height:28px;background:#8B7FE815;border:1px solid #8B7FE830;border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:500;color:#64D4C8;">3</div>
+                    <div style="width:28px;height:28px;background:#C9A05515;border:1px solid #C9A05530;border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:500;color:#C9A055;font-family:'Arial',sans-serif;">3</div>
                   </td>
                   <td style="padding-left:12px;">
-                    <p style="margin:0;font-size:14px;font-weight:300;color:#8B8AA8;line-height:1.6;">${ejercicios[2]}</p>
+                    <p style="margin:0;font-size:14px;color:#8A8070;line-height:1.6;font-family:'Arial',sans-serif;">${ejercicios[2]}</p>
                   </td>
                 </tr>
               </table>
@@ -175,9 +176,9 @@ export default async function handler(req, res) {
             <td style="padding:0 40px 32px;">
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="background:#0A0A0F;border:1px solid #8B7FE840;border-radius:12px;padding:24px;text-align:center;">
-                    <p style="margin:0 0 12px;font-size:16px;font-weight:500;color:#F0EFF8;line-height:1.6;font-style:italic;">"La acción no es decirle que no al amo.<br/>La acción es decirte que sí a ti."</p>
-                    <p style="margin:0;font-size:12px;color:#64D4C8;letter-spacing:0.1em;">— Alexa González</p>
+                  <td style="background:#070D1A;border:1px solid #C9A05530;border-radius:12px;padding:24px;text-align:center;">
+                    <p style="margin:0 0 12px;font-size:16px;font-weight:500;color:#F5F0E8;line-height:1.65;font-style:italic;font-family:'Georgia',serif;">"La acción no es decirle que no al amo.<br/>La acción es decirte que sí a ti."</p>
+                    <p style="margin:0;font-size:12px;color:#C9A055;letter-spacing:0.1em;font-family:'Arial',sans-serif;">— Alexa González</p>
                   </td>
                 </tr>
               </table>
@@ -186,9 +187,9 @@ export default async function handler(req, res) {
 
           <!-- Footer -->
           <tr>
-            <td style="padding:24px 40px;border-top:1px solid #2A2A3A;text-align:center;">
-              <p style="margin:0;font-size:12px;color:#4A4A6A;">Alexa González · Sírvete Primero</p>
-              <p style="margin:4px 0 0;font-size:12px;color:#4A4A6A;">alexagonzalez.co</p>
+            <td style="padding:24px 40px;border-top:1px solid #1A2E4A;text-align:center;">
+              <p style="margin:0;font-size:12px;color:#3A4A5A;font-family:'Arial',sans-serif;">Alexa González · Sírvete Primero</p>
+              <p style="margin:4px 0 0;font-size:12px;color:#3A4A5A;font-family:'Arial',sans-serif;">alexagonzalez.co</p>
             </td>
           </tr>
 

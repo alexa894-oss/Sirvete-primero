@@ -11,15 +11,15 @@
         extend: {
           colors: {
             brand: {
-              DEFAULT: '#8B7FE8',
-              light: '#8B7FE826',
-              dark: '#7B6FD8',
-              accent: '#64D4C8',
+              DEFAULT: '#C9A055',
+              light: '#C9A05520',
+              dark: '#B08840',
+              accent: '#E8D5A3',
             }
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
-            display: ['Syne', 'system-ui', 'sans-serif'],
+            display: ['Cormorant Garamond', 'Georgia', 'serif'],
           }
         }
       }
@@ -27,20 +27,20 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --color-bg:             #0A0A0F;
-      --color-bg-card:        #12121A;
-      --color-bg-elevated:    #1A1A26;
-      --color-primary:        #8B7FE8;
-      --color-primary-hover:  #7B6FD8;
-      --color-primary-glow:   #8B7FE826;
-      --color-accent:         #64D4C8;
-      --color-text-primary:   #F0EFF8;
-      --color-text-secondary: #8B8AA8;
-      --color-border:         #2A2A3A;
-      --color-border-active:  #8B7FE8;
+      --color-bg:             #070D1A;
+      --color-bg-card:        #0C1628;
+      --color-bg-elevated:    #112040;
+      --color-primary:        #C9A055;
+      --color-primary-hover:  #B08840;
+      --color-primary-glow:   #C9A05518;
+      --color-accent:         #E8D5A3;
+      --color-text-primary:   #F5F0E8;
+      --color-text-secondary: #8A8070;
+      --color-border:         #1A2E4A;
+      --color-border-active:  #C9A055;
     }
 
     * { -webkit-tap-highlight-color: transparent; }
@@ -71,7 +71,7 @@
     .option-card.selected {
       border: 1.5px solid var(--color-border-active);
       background: var(--color-primary-glow);
-      box-shadow: 0 0 15px #8B7FE820;
+      box-shadow: 0 0 15px #C9A05520;
     }
     .option-card .option-label { color: var(--color-text-secondary); font-size: 13px; }
     .option-card.selected .option-label { color: var(--color-text-primary); }
@@ -120,7 +120,7 @@
     .grid-card.selected {
       border: 1.5px solid var(--color-border-active);
       background: var(--color-primary-glow);
-      box-shadow: 0 0 15px #8B7FE820;
+      box-shadow: 0 0 15px #C9A05520;
     }
     .grid-card .card-name { color: var(--color-text-secondary); }
     .grid-card.selected .card-name { color: var(--color-text-primary); }
@@ -128,27 +128,28 @@
     .grid-card.selected .grid-check { opacity: 1; }
 
     .btn-primary {
-      background: linear-gradient(135deg, #8B7FE8, #7B6FD8);
-      color: #F0EFF8;
+      background: linear-gradient(135deg, #C9A055, #A87E38);
+      color: #070D1A;
       border-radius: 8px;
       padding: 16px 24px;
-      font-weight: 500;
-      font-size: 15px;
+      font-weight: 600;
+      font-size: 14px;
       font-family: 'Inter', sans-serif;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       width: 100%;
       transition: all 0.2s;
       border: none;
       cursor: pointer;
-      box-shadow: 0 0 20px #8B7FE830;
+      box-shadow: 0 0 20px #C9A05530;
     }
     .btn-primary:hover:not(:disabled) {
-      background: linear-gradient(135deg, #9B8FF8, #8B7FE8);
-      box-shadow: 0 0 28px #8B7FE845;
+      background: linear-gradient(135deg, #DDB870, #C9A055);
+      box-shadow: 0 0 28px #C9A05545;
     }
     .btn-primary:disabled {
-      background: #1A1A26;
-      color: #4A4A6A;
+      background: #1A2E4A;
+      color: #3A4A5A;
       box-shadow: none;
       cursor: not-allowed;
     }
@@ -198,13 +199,13 @@
     .tag {
       display: inline-block;
       background: var(--color-primary-glow);
-      color: var(--color-primary);
-      border: 1px solid #8B7FE840;
+      color: var(--color-accent);
+      border: 1px solid #C9A05540;
       border-radius: 20px;
       padding: 4px 12px;
       font-size: 11px;
       font-weight: 500;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
@@ -223,8 +224,8 @@
       margin-bottom: 6px;
     }
     .resultado-card .res-value {
-      font-family: 'Syne', sans-serif;
-      font-size: 18px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
       font-weight: 600;
       color: var(--color-primary);
       line-height: 1.3;
@@ -244,15 +245,15 @@
       width: 28px;
       height: 28px;
       min-width: 28px;
-      background: #8B7FE815;
-      color: var(--color-accent);
+      background: #C9A05515;
+      color: var(--color-primary);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 13px;
       font-weight: 500;
-      border: 1px solid #8B7FE830;
+      border: 1px solid #C9A05530;
     }
 
     textarea {
@@ -270,16 +271,16 @@
       min-height: 80px;
       background: var(--color-bg-elevated);
     }
-    textarea::placeholder { color: #4A4A6A; }
+    textarea::placeholder { color: #3A4A5A; }
     textarea:focus {
       border-color: var(--color-primary);
-      box-shadow: 0 0 10px #8B7FE820;
+      box-shadow: 0 0 10px #C9A05520;
     }
 
     .toggle-btn {
       background: transparent;
       color: var(--color-accent);
-      border: 1px dashed #64D4C840;
+      border: 1px dashed #C9A05540;
       border-radius: 8px;
       padding: 11px 16px;
       font-size: 13px;
@@ -290,8 +291,8 @@
       text-align: center;
       transition: all 0.2s;
     }
-    .toggle-btn:hover { color: var(--color-text-primary); border-color: var(--color-accent); background: #64D4C810; }
-    .toggle-btn.active { color: var(--color-text-primary); border-color: var(--color-accent); border-style: solid; background: #64D4C810; }
+    .toggle-btn:hover { color: var(--color-text-primary); border-color: var(--color-primary); background: #C9A05510; }
+    .toggle-btn.active { color: var(--color-text-primary); border-color: var(--color-primary); border-style: solid; background: #C9A05510; }
 
     input[type="text"], input[type="email"] {
       width: 100%;
@@ -307,10 +308,10 @@
       background: var(--color-bg-elevated);
       -webkit-appearance: none;
     }
-    input[type="text"]::placeholder, input[type="email"]::placeholder { color: #4A4A6A; }
+    input[type="text"]::placeholder, input[type="email"]::placeholder { color: #3A4A5A; }
     input[type="text"]:focus, input[type="email"]:focus {
       border-color: var(--color-primary);
-      box-shadow: 0 0 10px #8B7FE820;
+      box-shadow: 0 0 10px #C9A05520;
     }
     input.error { border-color: #E05A6B; }
 
@@ -337,12 +338,12 @@
 
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #2A2A3A; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: #1A2E4A; border-radius: 4px; }
   </style>
 </head>
-<body style="background:#0A0A0F;" class="min-h-screen flex items-start justify-center">
+<body style="background:#070D1A;" class="min-h-screen flex items-start justify-center">
 
-<div id="app" class="w-full max-w-[420px] min-h-screen flex flex-col" style="background:radial-gradient(ellipse at 20% 50%, #8B7FE815 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, #64D4C815 0%, transparent 60%), #0A0A0F;">
+<div id="app" class="w-full max-w-[420px] min-h-screen flex flex-col" style="background:radial-gradient(ellipse at 20% 50%, #C9A05510 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, #1A3A6020 0%, transparent 60%), #070D1A;">
 
   <!-- ═══════════════════════════════════════════
        PANTALLA 0 — CAPTURA DE CORREO
@@ -351,31 +352,26 @@
     <div class="flex-1 flex flex-col">
       <!-- Logo / Header -->
       <div class="text-center mb-10">
-        <p style="font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.2em;color:#64D4C8;text-transform:uppercase;" class="mb-4">Alexa González</p>
-        <h1 style="font-family:'Syne',sans-serif;font-size:38px;font-weight:700;color:#F0EFF8;line-height:1.1;" class="mb-4">Sírvete<br/>Primero</h1>
-        <p style="font-family:'Inter',sans-serif;font-size:15px;font-weight:300;color:#8B8AA8;line-height:1.65;">Identifica a tu amo y da el primer<br/>paso hacia ti.</p>
-      </div>
-
-      <!-- Decorative element -->
-      <div class="flex justify-center mb-10">
-        <div class="w-16 h-16 flex items-center justify-center" style="background:#8B7FE815;border-radius:12px;border:1px solid #8B7FE830;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#64D4C8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
-            <path d="M12 8v4l3 3" />
-          </svg>
+        <!-- Monograma AG estilo marca -->
+        <div class="flex justify-center mb-6">
+          <div style="width:72px;height:72px;border-radius:50%;border:1.5px solid #C9A05550;background:#C9A05510;display:flex;align-items:center;justify-content:center;">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#C9A055;letter-spacing:-1px;font-style:italic;">AG</span>
+          </div>
         </div>
+        <p style="font-family:'Inter',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.25em;color:#C9A055;text-transform:uppercase;" class="mb-2">Alexa González</p>
+        <h1 style="font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:600;color:#F5F0E8;line-height:1.05;letter-spacing:0.01em;" class="mb-4">Sírvete<br/>Primero</h1>
+        <p style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:#8A8070;line-height:1.7;">Identifica a tu amo y da el primer<br/>paso hacia ti.</p>
       </div>
 
       <!-- Form -->
       <div class="flex flex-col gap-4">
         <div>
-          <label class="block mb-2" style="color:#8B8AA8;font-size:12px;font-weight:400;letter-spacing:0.03em;">Tu nombre</label>
+          <label class="block mb-2" style="color:#8A8070;font-size:12px;font-weight:400;letter-spacing:0.03em;">Tu nombre</label>
           <input type="text" id="input-nombre" placeholder="¿Cómo te llamas?" autocomplete="given-name" />
           <p id="error-nombre" class="text-xs mt-1 hidden" style="color:#E05A6B;">Por favor escribe tu nombre.</p>
         </div>
         <div>
-          <label class="block mb-2" style="color:#8B8AA8;font-size:12px;font-weight:400;letter-spacing:0.03em;">Tu correo electrónico</label>
+          <label class="block mb-2" style="color:#8A8070;font-size:12px;font-weight:400;letter-spacing:0.03em;">Tu correo electrónico</label>
           <input type="email" id="input-email" placeholder="tu@correo.com" autocomplete="email" />
           <p id="error-email" class="text-xs mt-1 hidden" style="color:#E05A6B;">Por favor escribe un correo válido.</p>
         </div>
@@ -383,7 +379,7 @@
 
       <div class="mt-6">
         <button class="btn-primary" onclick="comenzar()">Comenzar mi ejercicio</button>
-        <p class="text-center text-xs mt-4" style="color:#4A4A6A;">Tu información es privada y segura.</p>
+        <p class="text-center text-xs mt-4" style="color:#3A4A5A;">Tu información es privada y segura.</p>
       </div>
     </div>
   </div>
@@ -401,26 +397,26 @@
       <div>
         <!-- Subtítulo + Título -->
         <div class="mb-8 mt-2">
-          <p style="font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.2em;color:#64D4C8;text-transform:uppercase;" class="mb-3">Bienvenida a</p>
-          <h2 style="font-family:'Syne',sans-serif;font-size:32px;font-weight:700;color:#F0EFF8;line-height:1.1;">La Mesa<br/>de los Amos</h2>
+          <p style="font-family:'Inter',sans-serif;font-size:10px;font-weight:400;letter-spacing:0.25em;color:#C9A055;text-transform:uppercase;" class="mb-3">Bienvenida a</p>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:600;color:#F5F0E8;line-height:1.05;">La Mesa<br/>de los Amos</h2>
         </div>
 
         <!-- Separador decorativo -->
-        <div style="width:40px;height:2px;background:linear-gradient(90deg,#8B7FE8,#64D4C8);border-radius:2px;" class="mb-8"></div>
+        <div style="width:40px;height:1px;background:linear-gradient(90deg,#C9A055,#E8D5A3);border-radius:2px;" class="mb-8"></div>
 
         <!-- Cuerpo del texto -->
         <div style="display:flex;flex-direction:column;gap:20px;">
 
           <div>
-            <p style="font-family:'Syne',sans-serif;font-size:15px;font-weight:600;color:#F0EFF8;margin-bottom:8px;">¿Qué es un amo?</p>
-            <p style="font-family:'Inter',sans-serif;font-size:15px;font-weight:300;color:#8B8AA8;line-height:1.7;">Un amo es todo aquello a lo que le servimos antes de servirnos a nosotras mismas.</p>
+            <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#F5F0E8;margin-bottom:8px;">¿Qué es un amo?</p>
+            <p style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:#8A8070;line-height:1.75;">Un amo es todo aquello a lo que le servimos antes de servirnos a nosotras mismas.</p>
           </div>
 
-          <p style="font-family:'Inter',sans-serif;font-size:15px;font-weight:300;color:#8B8AA8;line-height:1.7;">No siempre es una persona. Puede ser el miedo, la culpa, la necesidad de aprobación, el perfeccionismo, o cualquier patrón que consuma tu energía antes de que tú te sirvas.</p>
+          <p style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:#8A8070;line-height:1.75;">No siempre es una persona. Puede ser el miedo, la culpa, la necesidad de aprobación, el perfeccionismo, o cualquier patrón que consuma tu energía antes de que tú te sirvas.</p>
 
-          <p style="font-family:'Inter',sans-serif;font-size:15px;font-weight:300;color:#8B8AA8;line-height:1.7;">Muchas veces no tenemos conciencia de esto — y están ahí, cenando con nosotras y dejándonos hambrientas. Porque ellos toman las decisiones y el control.</p>
+          <p style="font-family:'Inter',sans-serif;font-size:14px;font-weight:300;color:#8A8070;line-height:1.75;">Muchas veces no tenemos conciencia de esto — y están ahí, cenando con nosotras y dejándonos hambrientas. Porque ellos toman las decisiones y el control.</p>
 
-          <p style="font-family:'Inter',sans-serif;font-size:15px;font-weight:400;color:#F0EFF8;line-height:1.7;">Hoy te invito a identificar los tuyos y servirte a ti primero.</p>
+          <p style="font-family:'Inter',sans-serif;font-size:14px;font-weight:400;color:#F5F0E8;line-height:1.75;">Hoy te invito a identificar los tuyos y servirte a ti primero.</p>
 
         </div>
       </div>
@@ -451,8 +447,8 @@
     <div class="flex-1 overflow-y-auto px-6 pb-8 fade-in">
       <div class="mb-6">
         <span class="tag">Paso 1 de 4</span>
-        <h2 class="text-xl mt-3 mb-1 leading-snug" style="font-family:'Syne',sans-serif;font-weight:600;color:#F0EFF8;">¿Cuál amo reconoces más en ti ahora mismo?</h2>
-        <p class="text-sm" style="color:#8B8AA8;font-weight:300;">Elige el que más energía te roba.</p>
+        <h2 class="text-xl mt-3 mb-1 leading-snug" style="font-family:'Cormorant Garamond',serif;font-weight:600;color:#F5F0E8;">¿Cuál amo reconoces más en ti ahora mismo?</h2>
+        <p class="text-sm" style="color:#8A8070;font-weight:300;">Elige el que más energía te roba.</p>
       </div>
 
       <div class="grid grid-cols-2 gap-3 mb-4" id="grid-amos">
@@ -487,8 +483,8 @@
     <div class="flex-1 overflow-y-auto px-6 pb-8 fade-in">
       <div class="mb-6">
         <span class="tag">Paso 2 de 4</span>
-        <h2 class="text-xl mt-3 mb-1 leading-snug" style="font-family:'Syne',sans-serif;font-weight:600;color:#F0EFF8;">¿Qué emoción aparece justo antes de servirle?</h2>
-        <p class="text-sm" style="color:#8B8AA8;font-weight:300;">Piensa en el último momento que cediste. ¿Qué sentías segundos antes?</p>
+        <h2 class="text-xl mt-3 mb-1 leading-snug" style="font-family:'Cormorant Garamond',serif;font-weight:600;color:#F5F0E8;">¿Qué emoción aparece justo antes de servirle?</h2>
+        <p class="text-sm" style="color:#8A8070;font-weight:300;">Piensa en el último momento que cediste. ¿Qué sentías segundos antes?</p>
       </div>
 
       <div class="flex flex-col gap-3 mb-4" id="list-emociones">
@@ -522,8 +518,8 @@
     <div class="flex-1 overflow-y-auto px-6 pb-8 fade-in">
       <div class="mb-6">
         <span class="tag">Paso 3 de 4</span>
-        <h2 class="text-xl mt-3 mb-1 leading-snug" style="font-family:'Syne',sans-serif;font-weight:600;color:#F0EFF8;">¿Qué hambre hay detrás de esa emoción?</h2>
-        <p class="text-sm" style="color:#8B8AA8;font-weight:300;">El amo es la respuesta que encontraste para una carencia que todavía no has sabido llenar de otra manera.</p>
+        <h2 class="text-xl mt-3 mb-1 leading-snug" style="font-family:'Cormorant Garamond',serif;font-weight:600;color:#F5F0E8;">¿Qué hambre hay detrás de esa emoción?</h2>
+        <p class="text-sm" style="color:#8A8070;font-weight:300;">El amo es la respuesta que encontraste para una carencia que todavía no has sabido llenar de otra manera.</p>
       </div>
 
       <div class="flex flex-col gap-3 mb-4" id="list-carencias">
@@ -557,8 +553,8 @@
     <div class="flex-1 overflow-y-auto px-6 pb-8 fade-in">
       <div class="mb-6">
         <span class="tag">Paso 4 de 4</span>
-        <h2 class="text-xl mt-3 mb-1 leading-snug" style="font-family:'Syne',sans-serif;font-weight:600;color:#F0EFF8;">¿Cómo te vas a servir a ti esta semana?</h2>
-        <p class="text-sm" style="color:#8B8AA8;font-weight:300;">Una acción pequeña, concreta y sostenida que nutra esa carencia real.</p>
+        <h2 class="text-xl mt-3 mb-1 leading-snug" style="font-family:'Cormorant Garamond',serif;font-weight:600;color:#F5F0E8;">¿Cómo te vas a servir a ti esta semana?</h2>
+        <p class="text-sm" style="color:#8A8070;font-weight:300;">Una acción pequeña, concreta y sostenida que nutra esa carencia real.</p>
       </div>
 
       <div class="flex flex-col gap-3 mb-4" id="list-acciones">
@@ -592,16 +588,16 @@
       <!-- Header resultado -->
       <div class="text-center mb-8">
         <div class="flex justify-center mb-4">
-          <div class="w-16 h-16 flex items-center justify-center" style="background:#8B7FE815;border-radius:12px;border:1px solid #8B7FE830;box-shadow:0 0 20px #8B7FE820;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#64D4C8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <div class="w-16 h-16 flex items-center justify-center" style="background:#C9A05515;border-radius:50%;border:1px solid #C9A05540;box-shadow:0 0 20px #C9A05520;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C9A055" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
               <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
               <path d="M9 12l2 2l4 -4" />
             </svg>
           </div>
         </div>
-        <p style="font-size:10px;font-weight:500;letter-spacing:0.2em;color:#64D4C8;text-transform:uppercase;" class="mb-1">Tu diagnóstico</p>
-        <h2 id="resultado-nombre" style="font-family:'Syne',sans-serif;font-size:32px;font-weight:700;color:#F0EFF8;"></h2>
+        <p style="font-size:10px;font-weight:500;letter-spacing:0.2em;color:#C9A055;text-transform:uppercase;" class="mb-1">Tu diagnóstico</p>
+        <h2 id="resultado-nombre" style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:#F5F0E8;"></h2>
       </div>
 
       <!-- Resumen -->
@@ -626,25 +622,25 @@
 
       <!-- Ejercicios -->
       <div class="mb-8">
-        <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:600;color:#F0EFF8;" class="mb-4">Tres ejercicios para sostener tu proceso</h3>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#F5F0E8;" class="mb-4">Tres ejercicios para sostener tu proceso</h3>
         <div class="flex flex-col gap-3" id="ejercicios-container">
           <!-- Generados por JS -->
         </div>
       </div>
 
       <!-- Frase de cierre -->
-      <div style="background:#12121A;border:1px solid #8B7FE840;border-radius:12px;box-shadow:0 0 30px #8B7FE815;" class="px-6 py-6 mb-6 text-center">
-        <p style="color:#F0EFF8;font-family:'Syne',sans-serif;font-size:17px;font-weight:500;line-height:1.65;">"La acción no es decirle que no al amo.<br/>La acción es decirte que sí a ti."</p>
-        <p style="color:#64D4C8;font-size:12px;font-weight:400;letter-spacing:0.1em;" class="mt-4">— Alexa González</p>
+      <div style="background:#0C1628;border:1px solid #C9A05530;border-radius:12px;box-shadow:0 0 30px #C9A05510;" class="px-6 py-6 mb-6 text-center">
+        <p style="color:#F5F0E8;font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;line-height:1.65;">"La acción no es decirle que no al amo.<br/>La acción es decirte que sí a ti."</p>
+        <p style="color:#C9A055;font-size:12px;font-weight:400;letter-spacing:0.1em;" class="mt-4">— Alexa González</p>
       </div>
 
       <!-- Nota de email -->
       <div class="text-center mb-8">
-        <p id="nota-email" style="color:#4A4A6A;font-size:13px;font-weight:300;"></p>
+        <p id="nota-email" style="color:#3A4A5A;font-size:13px;font-weight:300;"></p>
       </div>
 
       <!-- Volver a empezar -->
-      <button class="btn-primary" onclick="reiniciar()" style="background:transparent;color:#8B7FE8;border:1px solid #8B7FE840;box-shadow:none;">
+      <button class="btn-primary" onclick="reiniciar()" style="background:transparent;color:#C9A055;border:1px solid #C9A05540;box-shadow:none;letter-spacing:0.08em;">
         Hacer el ejercicio de nuevo
       </button>
     </div>
@@ -653,7 +649,7 @@
   <!-- Loading overlay -->
   <div id="loading-overlay" class="hidden fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50">
     <div class="text-center">
-      <div class="spinner mb-4" style="width:32px;height:32px;border-width:3px;border-color:#EAE9F8;border-top-color:#534AB7;margin:0 auto;"></div>
+      <div class="spinner mb-4" style="width:32px;height:32px;border-width:3px;border-color:#1A2E4A;border-top-color:#C9A055;margin:0 auto;"></div>
       <p class="text-gray-500 text-sm">Preparando tu diagnóstico...</p>
     </div>
   </div>
@@ -770,8 +766,8 @@ function renderAmos() {
         </svg>
       </div>
       <span class="text-2xl">${a.icon}</span>
-      <p class="card-name text-sm font-semibold leading-tight" style="font-family:'Syne',sans-serif;">${a.label}</p>
-      <p class="text-xs leading-snug" style="color:#8B8AA8;font-weight:300;">${a.desc}</p>
+      <p class="card-name text-sm font-semibold leading-tight" style="font-family:'Cormorant Garamond',serif;">${a.label}</p>
+      <p class="text-xs leading-snug" style="color:#8A8070;font-weight:300;">${a.desc}</p>
     </div>
   `).join('');
 }
@@ -782,7 +778,7 @@ function renderList(containerId, items, field) {
     <button class="option-card" id="card-${field}-${item.id}" onclick="selectOption('${field}', '${item.id}', '${escapeSingle(item.label)}')">
       <div class="radio-dot"></div>
       <div>
-        <p class="text-sm font-semibold leading-snug" style="color:#F0EFF8;font-family:'Syne',sans-serif;font-weight:500;">${item.label}</p>
+        <p class="text-sm font-semibold leading-snug" style="color:#F5F0E8;font-family:'Cormorant Garamond',serif;font-weight:500;">${item.label}</p>
         <p class="option-label text-xs mt-0.5 leading-snug">${item.desc}</p>
       </div>
     </button>
